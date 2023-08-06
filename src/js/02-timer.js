@@ -19,6 +19,11 @@ let intervalId = null;
 let selectedDate = null;
 let currentDate = null;
 
+Notiflix.Block.hourglass('.timer', {
+	cssAnimationDuration: 1881,
+	svgSize: '40px',
+});
+
 refs.start.addEventListener("click", startTimer);
 function startTimer() {
 	intervalId = setInterval(() => {
@@ -26,9 +31,29 @@ function startTimer() {
 		refs.input.disabled = 'true';
 		currentDate = Date.now();
 		const timerProg = selectedDate - currentDate;
+		const { days, hours, minutes, seconds } = convertMs(timerProg);
+		refs.day.textContent = addLeadingZero(days);
+		refs.hours.textContent = addLeadingZero(hours);
+		refs.minutes.textContent = addLeadingZero(minutes);
+		refs.seconds.textContent = addLeadingZero(seconds);
+		// console.log(timerProg);
+		if (timerProg <= 0) {
+			clearInterval(intervalId);
+			intervalId = null;
+			refs.start.disabled = 'true';
+			refs.input.removeAttribute("disabled");
+			Notiflix.Notify.success("Timer stopped");
+			refs.day.textContent = addLeadingZero(0);
+			refs.hours.textContent = addLeadingZero(0);
+			refs.minutes.textContent = addLeadingZero(0);
+			refs.seconds.textContent = addLeadingZero(0);
+		}
+		console.log(convertMs(timerProg));
 
-	})
+
+	}, 1000);
 }
+
 
 
 const options = {
@@ -62,7 +87,6 @@ function convertMs(ms) {
 	const minute = second * 60;
 	const hour = minute * 60;
 	const day = hour * 24;
-
 	// Remaining days
 	const days = Math.floor(ms / day);
 	// Remaining hours
@@ -73,4 +97,11 @@ function convertMs(ms) {
 	const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
 	return { days, hours, minutes, seconds };
+}
+
+
+
+
+function addLeadingZero(value) {
+	return String(value).padStart(2, '0');
 }
