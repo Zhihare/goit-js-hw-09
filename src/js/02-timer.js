@@ -47,8 +47,12 @@ function startTimer() {
 			refs.hours.textContent = addLeadingZero(0);
 			refs.minutes.textContent = addLeadingZero(0);
 			refs.seconds.textContent = addLeadingZero(0);
+			Notiflix.Block.hourglass('.timer', {
+				cssAnimationDuration: 1881,
+				svgSize: '40px',
+			});
 		}
-		console.log(convertMs(timerProg));
+		// console.log(convertMs(timerProg));
 
 
 	}, 1000);
