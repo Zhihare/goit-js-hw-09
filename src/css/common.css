@@ -108,14 +108,12 @@ input {
   touch-action: manipulation;
 }
 
-button,
-input:hover {
+button:hover {
   box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
   transform: translate3d(0, 2px, 0);
 }
 
-button,
-input:focus {
+button:focus {
   box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
 }
 
@@ -151,5 +149,16 @@ input:focus {
   align-items: center;
   justify-content: center;
   gap: 10px;
+
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+
+  font-family: Neucha, sans-serif;
+  font-size: 2rem;
 
 }
